@@ -7,6 +7,7 @@
  * @param {object} myfirebase 
  * @param {object} actions 
  */
+ 
 const AuthMiddleware = (myfirebase, actions) => {
     if (actions.to.matched.some(record => record.meta.auth)) {
         myfirebase.auth.check({
