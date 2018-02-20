@@ -1,6 +1,6 @@
 <template>
     
-    <div class="container" style="margin-top: 20px">
+    <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <h1>Update Profile</h1>
@@ -19,6 +19,13 @@
                 <div class="card card-default">
                     <div class="card-header">Update my informations</div>
                     <div class="card-body">
+
+                        <div class="container">
+                            <div v-if="isLoading" class="alert alert-info">
+                                Please wait...
+                            </div>
+                        </div>
+
                         <form v-on:submit.prevent="update()">
                             <div class="form-group row">
                                 <label class="col-sm-4 col-form-label text-md-right">Name</label>
@@ -72,6 +79,8 @@
 
         mounted() {
 
+            this.isLoading = true
+
             this.$auth.check({
                 then: (user) => {
                     this.user = user
@@ -99,9 +108,12 @@
                         else {
                             console.log("First time logged In")
                         }
+
+                        self.isLoading = false
                     });
                 },
                 catch: () => { 
+                    this.isLoading = false
                     console.log("I could not get the authentificated user")
                 }
             });
@@ -109,6 +121,8 @@
         },
         data() {
             return {
+                isLoading: false,
+
                 user: '',
 
                 name: '',
@@ -120,6 +134,8 @@
         },
         methods: {
             update() {
+                this.isLoading = true
+
                 let ref = this.$store.state.firebase.database().ref('users')
 
                 ref.child(this.user.uid).set({
@@ -128,6 +144,8 @@
                     city: this.city,
                     age: this.age,
                     phone_number: this.phone_number
+                }, () => {
+                    this.isLoading = false
                 });
             }
         }
