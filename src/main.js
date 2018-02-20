@@ -12,7 +12,6 @@ import router from '@/router'
 import store from './../storage/store'
 import VueFire from 'vuefire'
 import Myfirebase from 'myfirebase'
-import VueMaterial from 'vue-material'
 import Firestore from 'vue-firestore'
 
 // Middlewares
@@ -23,27 +22,6 @@ Vue.config.productionTip = false
 // Init VueFire (Firebase real time database)
 Vue.use(VueFire)
 Vue.use(Firestore)
-
-// init VueMaterial
-Vue.use(VueMaterial)
-
-// Register themes with VueMaterial
-
-// Default
-Vue.material.registerTheme('default', {
-    primary: 'blue',
-    accent: 'red',
-    warn: 'orange',
-    background: 'white'
-})
-
-// Login
-Vue.material.registerTheme('login', {
-    primary: 'indigo',
-    accent: 'blue',
-    warn: 'black',
-    background: 'white'
-})
 
 // Init Myfirebase
 Vue.use(Myfirebase, {
