@@ -70,27 +70,36 @@
 
     export default {
 
-        firebase() {
-            return {
-                users: this.$store.state.database.child('users'),
-            }
-        },
-
         mounted() {
 
             this.$auth.check({
                 then: (user) => {
-                    let ref = this.$store.state.firebase.database().ref('users/' + user.uid)
-                    
-                    ref.on('value', (data) => {
-                        this.name = data.val().name
-                        this.bio = data.val().bio
-                        this.city = data.val().city
-                        this.age = data.val().age
-                        this.phone_number = data.val().phone_number
-                    }, (error) => {
-                        console.log("I could not get user data")
-                    })
+                    this.user = user
+
+                    let ref = this.$store.state.firebase.database().ref('users')
+
+                    let self = this;
+
+                    ref.once('value', function(snapshot) {
+                        if (snapshot.hasChild(user.uid)) {
+                            ref.on('value', (data) => {
+
+                                let item = data.val()[user.uid]
+
+                                self.name = item.name
+                                self.bio = item.bio
+                                self.city = item.city
+                                self.age = item.age
+                                self.phone_number = item.phone_number
+
+                            }, (error) => {
+                                console.log("I could not get user data")
+                            })
+                        }
+                        else {
+                            console.log("First time logged In")
+                        }
+                    });
                 },
                 catch: () => { 
                     console.log("I could not get the authentificated user")
@@ -100,11 +109,26 @@
         },
         data() {
             return {
+                user: '',
+
                 name: '',
                 bio: '',
                 city: '',
                 age: '',
                 phone_number: ''
+            }
+        },
+        methods: {
+            update() {
+                let ref = this.$store.state.firebase.database().ref('users')
+
+                ref.child(this.user.uid).set({
+                    name: this.name,
+                    bio: this.bio,
+                    city: this.city,
+                    age: this.age,
+                    phone_number: this.phone_number
+                });
             }
         }
     }
