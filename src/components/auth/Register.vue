@@ -1,5 +1,5 @@
 <template>
-
+    
     <div class="container" style="margin-top: 20px">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -9,12 +9,19 @@
                 <p v-if="hasError">{{ error }}</p>
 
                 <div class="card card-default">
-                    <div class="card-header">Login</div>
+                    <div class="card-header">Register</div>
 
                     <div class="card-body">
-                        <form v-on:submit.prevent="login()">
+        				<form v-on:submit.prevent="register()">
+        					<div class="form-group row">
+                                <label class="col-md-4 col-form-label text-md-right">Name</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" v-model="name">
+                                </div>
+                            </div>
+
                             <div class="form-group row">
-                                <label class="col-sm-4 col-form-label text-md-right">E-Mail Address</label>
+                                <label class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
                                 <div class="col-md-6">
                                     <input type="email" class="form-control" v-model="email">
                                 </div>
@@ -23,32 +30,25 @@
                             <div class="form-group row">
                                 <label class="col-md-4 col-form-label text-md-right">Password</label>
                                 <div class="col-md-6">
-                                    <input type="password" class="form-control" v-model="password"  >
+                                    <input type="password" class="form-control" v-model="password">
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <div class="col-md-6 offset-md-4">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="remember"> Remember Me
-                                        </label>
-                                    </div>
+                                <label class="col-md-4 col-form-label text-md-right">Confirm Password</label>
+                                <div class="col-md-6">
+                                    <input type="password" class="form-control" v-model="confirm_password">
                                 </div>
                             </div>
 
                             <div class="form-group row mb-0">
-                                <div class="col-md-8 offset-md-4">
+                                <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
-                                        Login
+                                        Register
                                     </button>
-
-                                    <a class="btn btn-link" href="#">
-                                        Forgot Your Password?
-                                    </a>
                                 </div>
                             </div>
-                        </form>
+        				</form>
                     </div>
                 </div>
             </div>
@@ -63,19 +63,21 @@
         mounted() {
             this.$auth.state({
                 forward: '/dashboard',
-                redirect: '/login',
+                redirect: '/register',
                 then: (user) => {
                     console.log(user)
                 },
                 catch: () => {
-                    console.log('Please log in!')
+                    console.log('Please register!')
                 }
             });
         },
         data() {
             return {
+                name: '',
                 email: '',
                 password: '',
+                confirm_password: '',
 
                 isLoading: false,
                 hasError: false,
@@ -83,23 +85,23 @@
             }
         },
         methods: {
-            login() {
+        	register() {
                 this.isLoading = true
 
-                this.$auth.loginWithEmailAndPassowrd({
-                    email: this.email,
-                    password: this.password,
-                    success: (user) => {
+			    this.$auth.registerWithEmailAndPassword({
+			        email: this.email,
+			        password: this.password,
+			        success: (user) => {
                         this.isLoading = false
                         console.log(user)
-                    },
-                    error: (error) => {
-                        this.isLoading = false
+			        },
+			        error: (error) => {
+			        	this.isLoading = false
                         this.hasError = true
                         this.error = error
-                    }
-                })
-            }
+			        }
+			    });
+			}
         }
     }
 

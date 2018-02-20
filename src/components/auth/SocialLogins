@@ -1,0 +1,85 @@
+<md-theme md-name="default" md-layout md-flex-xsmall="100" md-flex-medium="100">
+    <md-button @click.native="signInGoogle()" class="md-raised">
+        <img class="icon" src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"> google
+    </md-button>
+</md-theme>
+<md-theme md-name="login" md-layout md-flex-xsmall="100">
+    <md-button @click.native="signInFacebook()" class="md-raised md-primary">
+        <img class="icon" src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/facebook.svg"> facebook
+    </md-button>
+</md-theme>
+<md-theme md-name="login" md-layout md-flex-xsmall="100">
+    <md-button @click.native="signInTwitter()" class="md-raised md-accent">
+        <img class="icon" src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/twitter.svg"> twitter
+    </md-button>
+</md-theme>
+<md-theme md-name="login" md-layout md-flex-xsmall="100">
+    <md-button @click.native="signInGithub()" class="md-raised md-warn">
+        <img class="icon" src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/github.svg"> github
+    </md-button>
+</md-theme>
+
+signInGoogle() {
+            this.ready = false
+            this.$auth.signInWithGoogle({
+                result: (result) => {
+                    // This gives you a Google Access Token. You can use it to access the Google API.
+                    // console.log("Token : " + result.credential.accessToken)
+                    // The signed-in user info.
+                    //console.log("User Email : " + result.user.email)
+                    this.ready = true
+                },
+                error: (error) => {
+                    // Error
+                    this.error = error.message
+                    this.ready = false;
+                    this.$refs.snackbar.open()
+                }
+            })
+        },
+        signInFacebook() {
+            this.ready = false
+            this.$auth.signInWithFacebook({
+                result: (result) => {
+                    //console.log("Token : " + result.credential.accessToken)
+                    //console.log("User Email : " + result.user.email)
+                    this.ready = true
+                },
+                error: (error) => {
+                    this.error = error.message
+                    this.ready = false;
+                    this.$refs.snackbar.open()
+                }
+            })
+        },
+        signInTwitter() {
+            this.ready = false
+            this.$auth.signInWithTwitter({
+                result: (result) => {
+                    //console.log("Token : " + result.credential.accessToken)
+                    //console.log("User Email : " + result.user.email)
+                    //console.log(result.user)
+                    this.ready = true
+                },
+                error: (error) => {
+                    this.error = error.message
+                    this.ready = false;
+                    this.$refs.snackbar.open()
+                }
+            })
+        },
+        signInGithub() {
+            this.ready = false
+            this.$auth.signInWithGithub({
+                result: (result) => {
+                    //console.log("Token : " + result.credential.accessToken)
+                    //console.log("User Email : " + result.user.email)
+                    this.true = true
+                },
+                error: (error) => {
+                    this.error = error.message
+                    this.ready = false;
+                    this.$refs.snackbar.open()
+                }
+            })
+        }

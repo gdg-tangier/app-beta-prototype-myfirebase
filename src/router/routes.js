@@ -1,11 +1,18 @@
 // Routes
 import Layout from '@/components/Layout'
-import Welcome from '@/components/Welcome'
+
+import Homepage from '@/components/Homepage'
 import Login from '@/components/auth/Login'
-import UpdateProfile from '@/components/auth/UpdateProfile'
+import Register from '@/components/auth/Register'
+
+import Dashboard from '@/components/Dashboard'
+import ProfileUpdate from '@/components/ProfileUpdate'
+import Members from '@/components/Members'
 import App from '@/components/App'
-import NotFound from '@/components/errors/404'
+import UpdateProfile from '@/components/auth/UpdateProfile'
 import Firestore from '@/components/Firestore'
+import NotFound from '@/components/errors/404'
+
 
 import Vue from 'vue'
 
@@ -14,8 +21,8 @@ const routes = [{
     component: Layout,
     children: [{
             path: '/',
-            component: Welcome,
-            name: 'Welcome'
+            component: Homepage,
+            name: 'Homepage'
         },
         {
             path: '/login',
@@ -23,9 +30,30 @@ const routes = [{
             name: 'login'
         },
         {
-            path: '/update-profile',
-            component: UpdateProfile,
+            path: '/register',
+            component: Register,
+            name: 'register'
+        },
+        {
+            path: '/dashboard',
+            component: Dashboard,
+            name: 'dashboard',
+            meta: {
+                auth: true
+            }
+        },
+        {
+            path: '/profile/update',
+            component: ProfileUpdate,
             name: 'Profile Update',
+            meta: {
+                auth: true
+            }
+        },
+        {
+            path: '/members',
+            component: Members,
+            name: 'members',
             meta: {
                 auth: true
             }
