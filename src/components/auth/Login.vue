@@ -71,7 +71,13 @@
         mounted() {
             this.$auth.state({
                 forward: '/dashboard',
-                redirect: '/login'
+                redirect: '/register',
+                then: (user) => {
+                    //
+                },
+                catch: () => {
+                    //
+                }
             });
         },
         data() {
