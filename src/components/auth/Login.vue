@@ -1,12 +1,20 @@
 <template>
 
-    <div class="container" style="margin-top: 20px">
+    <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
 
-                <p v-if="isLoading">I am loading...</p>
+                <div class="container">
+                    <div v-if="isLoading" class="alert alert-info">
+                        Please wait...
+                    </div>
+                </div>
 
-                <p v-if="hasError">{{ error }}</p>
+                <div class="container">
+                    <div v-if="hasError" class="alert alert-danger">
+                        {{ error }}
+                    </div>
+                </div>
 
                 <div class="card card-default">
                     <div class="card-header">Login</div>
@@ -63,13 +71,7 @@
         mounted() {
             this.$auth.state({
                 forward: '/dashboard',
-                redirect: '/login',
-                then: (user) => {
-                    console.log(user)
-                },
-                catch: () => {
-                    console.log('Please log in!')
-                }
+                redirect: '/login'
             });
         },
         data() {
@@ -91,7 +93,6 @@
                     password: this.password,
                     success: (user) => {
                         this.isLoading = false
-                        console.log(user)
                     },
                     error: (error) => {
                         this.isLoading = false

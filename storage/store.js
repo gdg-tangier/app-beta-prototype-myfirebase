@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import { firebase } from './../src/firebase/firebase'
 import auth from './../storage/modules/myfirebase-auth/auth'
 import storage from './../storage/modules/myfirebase-storage/storage'
+
 require('firebase/firestore')
 
 Vue.use(Vuex);

@@ -1,6 +1,6 @@
 <template>
 
-	<nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+	<nav class="navbar navbar-expand-md navbar-light navbar-laravel" style="margin-bottom: 20px">
         <div class="container">
         	<router-link to="/" class="navbar-brand">
 				GDG Tangier
