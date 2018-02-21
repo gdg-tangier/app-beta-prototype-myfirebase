@@ -31,10 +31,26 @@ export default new Vuex.Store({
         firestore: firestore,
         error: error,
         messaging: fcm,
-        firebase: firebase
+        firebase: firebase,
+        state: {
+            message: "",
+            style: {
+                state: ""
+            },
+            fired: false
+        }
     },
     // mutations
-    mutations: {},
+    mutations: {
+        stateResponse(state, payload) {
+            state.state.message = payload.message
+            state.state.style.state = payload.class
+            state.state.fired = true
+        },
+        changeState(state) {
+            state.state.fired = false
+        },
+    },
     // getters
     getters: {},
     //actions
