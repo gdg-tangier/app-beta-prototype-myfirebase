@@ -18,13 +18,12 @@
                 <div class="card card-default">
                     <div class="card-header">Update my informations</div>
                     <div class="card-body">
-
                         <div class="container">
-                            <div v-if="isLoading" class="alert alert-info">
-                                Please wait...
+                            <div v-if="$store.state.state.fired" :class="$store.state.state.style.state">
+                                <button type="button" class="close" @click="$store.commit('changeState')"><span aria-hidden="true">&times;</span></button>
+                                {{$store.state.state.message}}
                             </div>
                         </div>
-
                         <form v-on:submit.prevent="update()">
                             <div class="form-group row">
                                 <label class="col-sm-4 col-form-label text-md-right">Name</label>
@@ -68,11 +67,15 @@
                 </div>
             </div>
         </div>
+        <div class="overlay" v-if="isLoading">
+            <i class="fa fa-gear fa-spin flex-spinner"></i>
+        </div>
     </div>
 </template>
 
 <script>
 import Profile from "./../models/profile"
+import State from "./../utils/state"
 
 export default {
 
@@ -110,10 +113,12 @@ export default {
             this.isLoading = true
             this.$firebaseRefs.loggedIn
                 .set(this.Profile.toJson()).then(() => {
+                    this.$store.commit('stateResponse', State.toSuccess("Updated !!"))
                     this.isLoading = false
                 })
                 .catch((err) => {
                     this.isLoading = false
+                    this.$store.commit('stateResponse', State.toError(err.message))
                     console.error(err.message)
                 })
         }
