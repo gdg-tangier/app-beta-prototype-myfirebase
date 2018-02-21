@@ -29,36 +29,36 @@
                             <div class="form-group row">
                                 <label class="col-sm-4 col-form-label text-md-right">Name</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" v-model="Profile.name">
+                                    <input type="text" class="form-control" v-model.trim="Profile.name">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-4 col-form-label text-md-right">Bio</label>
                                 <div class="col-md-6">
-                                    <textarea class="form-control" v-model="Profile.bio" rows="4"></textarea>
+                                    <textarea class="form-control" v-model.trim="Profile.bio" rows="4"></textarea>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-4 col-form-label text-md-right">City</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" v-model="Profile.city">
+                                    <input type="text" class="form-control" v-model.trim="Profile.city">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-4 col-form-label text-md-right">Age</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" v-model="Profile.age">
+                                    <input type="text" class="form-control" v-model.trim="Profile.age">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-4 col-form-label text-md-right">Phone Number</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" v-model="Profile.phone_number">
+                                    <input type="text" class="form-control" v-model.trim="Profile.phone_number">
                                 </div>
                             </div>
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn btn-primary" :disabled="isLoading">
                                         Save
                                     </button>
                                 </div>
@@ -77,9 +77,7 @@ import Profile from "./../models/profile"
 export default {
 
     mounted() {
-
         this.isLoading = true
-
         this.$auth.check({
             then: (user) => {
                 this.$bindAsObject("loggedIn",this.$store.state.firebase.database().ref(`users/${user.uid}`),null,
@@ -109,11 +107,13 @@ export default {
     },
     methods: {
         update() {
+            this.isLoading = true
             this.$firebaseRefs.loggedIn
                 .set(this.Profile.toJson()).then(() => {
                     this.isLoading = false
                 })
                 .catch((err) => {
+                    this.isLoading = false
                     console.error(err.message)
                 })
         }
