@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+
         <div class="row">
             <div class="col-md-12">
                 <h1>Update Profile</h1>
@@ -20,11 +21,21 @@
                     <div class="card-body">
                         <div class="container">
                             <div v-if="$store.state.state.fired" :class="$store.state.state.style.state">
-                                <button type="button" class="close" @click="$store.commit('changeState')"><span aria-hidden="true">&times;</span></button>
+                                <button type="button" class="close" @click="$store.commit('changeState')">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                                 {{$store.state.state.message}}
                             </div>
                         </div>
+
                         <form v-on:submit.prevent="update()">
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label text-md-right">Avatar</label>
+                                <div class="col-md-6">
+                                    <img src="" alt="">
+                                    <input type="file" class="hidden" @change="getFile" accept="image/*">
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <label class="col-sm-4 col-form-label text-md-right">Name</label>
                                 <div class="col-md-6">
@@ -83,7 +94,7 @@ export default {
         this.isLoading = true
         this.$auth.check({
             then: (user) => {
-                this.$bindAsObject("loggedIn",this.$store.state.firebase.database().ref(`users/${user.uid}`),null,
+                this.$bindAsObject("loggedIn", this.$store.state.firebase.database().ref(`users/${user.uid}`), null,
                     () => {
                         if (this.loggedIn) {
                             this.Profile.setName(this.loggedIn.name)
