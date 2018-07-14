@@ -3,7 +3,7 @@ export default class Profile {
     /**
      * Create new Profile instance
      */
-    constructor() {
+    constructor () {
         this.bio = ""
         this.name = ""
         this.city = ""
@@ -18,7 +18,7 @@ export default class Profile {
      * 
      * @return {Profile}
      */
-    setBio(bio) {
+    setBio (bio) {
         this.bio = bio
 
         return this
@@ -31,7 +31,7 @@ export default class Profile {
      * 
      * @return {Profile} 
      */
-    setName(name) {
+    setName (name) {
         this.name = name
 
         return this
@@ -44,7 +44,7 @@ export default class Profile {
      * 
      * @return {Profile} 
      */
-    setCity(city) {
+    setCity (city) {
         this.city = city
 
         return this
@@ -57,7 +57,7 @@ export default class Profile {
      * 
      * @return {Profile} 
      */
-    setAge(age) {
+    setAge (age) {
         this.age = age
 
         return this
@@ -70,7 +70,7 @@ export default class Profile {
      * 
      * @return {Profile}
      */
-    setPhoneNumber(phoneNumber) {
+    setPhoneNumber (phoneNumber) {
         this.phone_number = phoneNumber
 
         return this
@@ -81,7 +81,7 @@ export default class Profile {
      * 
      * @return {*}
      */
-    toJson() {
+    toJson () {
         return {
             bio: this.bio,
             name: this.name,
