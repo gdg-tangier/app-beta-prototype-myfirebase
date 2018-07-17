@@ -35,7 +35,7 @@
 
 <script>
 export default {
-    mounted() {
+    mounted () {
         this.$auth.check({
             then(user) {
                 this.userEmail = user.email
@@ -53,12 +53,12 @@ export default {
             })
         */
     },
-    firebase() {
+    firebase () {
         return {
             data: this.$store.state.database.child('data'),
         }
     },
-    data() {
+    data () {
         return {
             message: "welcome",
             newData: '',
@@ -68,7 +68,7 @@ export default {
         }
     },
     methods: {
-        addData() {
+        addData () {
             this.$firebaseRefs.data.onDisconnect().cancel()
             this.$firebaseRefs.data.push({
                 data: this.newData,
@@ -77,7 +77,7 @@ export default {
             });
             this.newData = ''
         },
-        deleteData(key) {
+        deleteData (key) {
             this.$firebaseRefs.data.child(key).remove()
         }
     }
