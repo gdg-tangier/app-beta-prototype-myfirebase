@@ -13,10 +13,10 @@
 <script>
 
     export default {
-        mounted() {
+        mounted () {
             //
         },
-        data() {
+        data () {
             return {
                 //
             }
